@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# $1 - device
+
+cd ./android
+
+NAME=$(awk '/name:/ {print $2;}' < ./appinfo)
+AUTHOR=$(awk '/author:/ {print $2;}' < ./appinfo)
+ACTIVITY=$(awk '/activity:/ {print $2;}' < ./appinfo)
+PACKAGE=$(awk '/package:/ {print $2;}' < ./appinfo)
+
+echo "uninstall"
+/opt/android-sdk/platform-tools/adb -s $1 shell pm uninstall $PACKAGE
+
+echo "install"
+/opt/android-sdk/platform-tools/adb -s $1 install ./bin/${NAME}-debug.apk
+
+echo "run installed application"
+/opt/android-sdk/platform-tools/adb -s $1 shell am start -n $PACKAGE/.$ACTIVITY
+
+trap "echo 'force stop'; /opt/android-sdk/platform-tools/adb -s $1 shell am force-stop ${PACKAGE}" SIGINT SIGTERM
+
+echo "waiting"
+/opt/android-sdk/platform-tools/adb -s $1 logcat -s $NAME

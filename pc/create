@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# $1 - application name
+# $2 - author
+# $3 - header
+
+NAME=$1
+AUTHOR=$2
+HEADER=$3
+
+# creating project directory
+mkdir ./pc
+
+# saving info to file
+touch ./pc/appinfo
+echo "name:	${NAME}
+author:	${AUTHOR}
+header:	${HEADER}" > ./pc/appinfo
+
+# updating files
+
+SELFDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+cp -R ${SELFDIR}/files/* ./pc/
+${SELFDIR}/../common/substitute ./pc/ ${NAME} ${AUTHOR} ${HEADER}
+
+# making link
+ln -s ../source ./pc/

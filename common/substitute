@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# $1 - folder with files to substitute
+
+# $2 - name
+# $3 - author
+# $4 - activity/header
+
+# perform substitution
+for i in $(find $1 -type f); do \
+	sed -i.bak "s/\$name/$2/g" $i
+	sed -i.bak "s/\$author/$3/g" $i
+	sed -i.bak "s/\$activity/$4/g" $i
+	sed -i.bak "s/\$header/$4/g" $i
+	sed -i.bak "s/\$package/com.$3.$2/g" $i
+done
+
+# remove backup files
+rm $(find $1 -type f | grep '.bak$')

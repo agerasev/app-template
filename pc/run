@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd ./pc/
+
+NAME=$(awk '/name:/ {print $2;}' < ./appinfo)
+
+./${NAME}

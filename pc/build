@@ -1,0 +1,14 @@
+#!/bin/bash
+
+mkdir -p ./pc/obj/
+mkdir -p ./pc/obj/source/
+DIRS=$(cd ./pc/source; find -L .)
+cd ./pc/obj/source
+mkdir -p $DIRS
+
+cd ../../
+
+# HEADERS=$(find -L . -type f | awk '/((.hpp)|(.h))$/ {print $0;}' | sed ':a;N;$!ba;s/\n/ /g' | sed 's|/|\\/|g')
+# SOURCES=$(find -L . -type f | awk '/((.cpp)|(.c))$/ {print $0;}' | sed ':a;N;$!ba;s/\n/ /g' | sed 's|/|\\/|g')
+
+make
