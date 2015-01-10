@@ -9,6 +9,7 @@ For `PC` development are needed:
 + `make`
 + `libsdl2`
 + `libglew`
+
 For `Android` development you need `android-sdk` and `android-ndk` tools. I place them into `/opt` directory. If you will place them in other directory, you must change paths in `android/*` scripts.
 
 You can use this tool by running `bash` scripts from project directory:
