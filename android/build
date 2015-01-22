@@ -3,7 +3,7 @@
 cd ./android/
 
 echo "compile native code"
-/opt/android-ndk/ndk-build
+ndk-build
 if [ $? -ne 0 ]; then exit; fi
 
 echo "build project"

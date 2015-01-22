@@ -1,9 +1,11 @@
 #!/bin/bash
 
-mkdir -p ./pc/obj/
-mkdir -p ./pc/obj/source/
-DIRS=$(cd ./pc/source; find -L .)
-cd ./pc/obj/source
+BUILD_DIR='desktop'
+
+mkdir -p ./$BUILD_DIR/obj/
+mkdir -p ./$BUILD_DIR/obj/source/
+DIRS=$(cd ./$BUILD_DIR/source; find -L . -type d)
+cd ./$BUILD_DIR/obj/source
 mkdir -p $DIRS
 
 cd ../../

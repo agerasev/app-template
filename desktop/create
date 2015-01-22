@@ -6,23 +6,25 @@
 
 NAME=$1
 AUTHOR=$2
-HEADER=$3
+LABEL=$3
+
+BUILD_DIR='desktop'
 
 # creating project directory
-mkdir ./pc
+mkdir ./$BUILD_DIR
 
 # saving info to file
-touch ./pc/appinfo
+touch ./$BUILD_DIR/appinfo
 echo "name:	${NAME}
 author:	${AUTHOR}
-header:	${HEADER}" > ./pc/appinfo
+label:	${LABEL}" > ./$BUILD_DIR/appinfo
 
 # updating files
 
 SELFDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-cp -R ${SELFDIR}/files/* ./pc/
-${SELFDIR}/../common/substitute ./pc/ ${NAME} ${AUTHOR} ${HEADER}
+cp -R ${SELFDIR}/files/* ./$BUILD_DIR/
+${SELFDIR}/../common/substitute ./$BUILD_DIR/ ${NAME} ${AUTHOR} ${HEADER}
 
 # making link
-ln -s ../source ./pc/
+ln -s ../source ./$BUILD_DIR/

@@ -2,13 +2,14 @@
 
 # $1 - application name
 # $2 - author
-# $3 - activity
+# $3 - label
 
 SELFDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 mkdir -p $1
 cd $1
 
+mkdir -p ./source/
 cp -R ${SELFDIR}/common/files/* ./
 ${SELFDIR}/android/create $1 $2 $3
-${SELFDIR}/pc/create $1 $2 $3
+${SELFDIR}/desktop/create $1 $2 $3

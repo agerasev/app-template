@@ -2,43 +2,33 @@
 
 # $1 - application name
 # $2 - author
-# $3 - activity
+# $3 - label
 
 NAME=$1
 AUTHOR=$2
-ACTIVITY=$3
+LABEL=$3
 PACKAGE='com.'$2'.'$1
 
-# creating android project
-/opt/android-sdk/tools/android create project \
-	--target 1 \
-	--name $NAME \
-	--path ./android \
-	--activity $ACTIVITY \
-	--package $PACKAGE
+# create directory
+mkdir ./android
 
 # saving info to file
 touch ./android/appinfo
 echo "name:	${NAME}
 author:	${AUTHOR}
-activity:	${ACTIVITY}
+label:	${LABEL}
 package:	${PACKAGE}" > ./android/appinfo
 
 # updating files
-sed -i.bak "s/<\/manifest>/    <uses-sdk android:minSdkVersion='17' \/>\n    <uses-feature android:glEsVersion='0x00020000' android:required='true' \/>\n<\/manifest>/g" ./android/AndroidManifest.xml
-rm ./android/AndroidManifest.xml.bak
 
 SELFDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-JSRCDIR="./android/src/com/${AUTHOR}/${NAME}"
-rm ${JSRCDIR}/*
-cp ${SELFDIR}/files/java/* ${JSRCDIR}/
-mv ${JSRCDIR}/\$activity.java ${JSRCDIR}/${ACTIVITY}.java
-${SELFDIR}/../common/substitute ${JSRCDIR} ${NAME} ${AUTHOR} ${ACTIVITY}
+PROJDIR="./android/"
+cp -R ${SELFDIR}/files/* ./android/
+${SELFDIR}/../common/substitute ${PROJDIR} ${NAME} ${AUTHOR} ${LABEL}
 
-CSRCDIR="./android/jni"
-cp -R ${SELFDIR}/files/jni ./android/
-${SELFDIR}/../common/substitute ${CSRCDIR} ${NAME} ${AUTHOR} ${ACTIVITY}
+# updating android project
+android update project -p ./android -t 1 -n $NAME
 
 # making link
 ln -s ../../source ./android/jni
