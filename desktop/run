@@ -1,9 +1,5 @@
 #!/bin/bash
 
-BUILD_DIR='desktop'
+cd ./desktop/
 
-cd ./$BUILD_DIR/
-
-NAME=$(awk '/name:/ {print $2;}' < ./appinfo)
-
-./${NAME}
+./app

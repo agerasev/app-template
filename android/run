@@ -1,24 +1,27 @@
 #!/bin/bash
 
-# $1 - device
+# [ $1 - device ]
+
+DEVOPT="-s $1"
+if [ -z "$1" ]
+then
+	DEVOPT=""
+fi
 
 cd ./android
 
-NAME=$(awk '/name:/ {print $2;}' < ./appinfo)
-AUTHOR=$(awk '/author:/ {print $2;}' < ./appinfo)
-LABEL=$(awk '/label:/ {print $2;}' < ./appinfo)
-PACKAGE=$(awk '/package:/ {print $2;}' < ./appinfo)
+PACKAGE=$(awk -F'"' '/package/{print $2}' AndroidManifest.xml)
 
 echo "uninstall"
-adb -s $1 shell pm uninstall $PACKAGE
+adb $DEVOPT shell pm uninstall $PACKAGE
 
 echo "install"
-adb -s $1 install ./bin/${NAME}-debug.apk
+adb $DEVOPT install ./bin/app-debug.apk
 
 echo "run installed application"
-adb shell monkey -p $PACKAGE -c android.intent.category.LAUNCHER 1
+adb $DEVOPT shell monkey -p $PACKAGE -c android.intent.category.LAUNCHER 1
 
-trap "echo 'force stop'; adb -s $1 shell am force-stop ${PACKAGE}" SIGINT SIGTERM
+trap "echo 'force stop'; adb $DEVOPT shell am force-stop $PACKAGE" SIGINT SIGTERM
 
 echo "waiting"
-adb -s $1 logcat -s $NAME
+adb $DEVOPT logcat -s libm4u_log

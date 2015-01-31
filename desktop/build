@@ -2,15 +2,13 @@
 
 BUILD_DIR='desktop'
 
-mkdir -p ./$BUILD_DIR/obj/
-mkdir -p ./$BUILD_DIR/obj/source/
-DIRS=$(cd ./$BUILD_DIR/source; find -L . -type d)
-cd ./$BUILD_DIR/obj/source
+mkdir -p ./desktop/obj/
+mkdir -p ./desktop/obj/source/
+
+DIRS=$(cd ./desktop/source; find -L . -type d)
+cd ./desktop/obj/source
 mkdir -p $DIRS
 
 cd ../../
-
-# HEADERS=$(find -L . -type f | awk '/((.hpp)|(.h))$/ {print $0;}' | sed ':a;N;$!ba;s/\n/ /g' | sed 's|/|\\/|g')
-# SOURCES=$(find -L . -type f | awk '/((.cpp)|(.c))$/ {print $0;}' | sed ':a;N;$!ba;s/\n/ /g' | sed 's|/|\\/|g')
 
 make

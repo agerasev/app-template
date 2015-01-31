@@ -2,17 +2,17 @@ include ../build-info.mk
 
 C = gcc
 CXX = g++
-LINKFLAGS = $(_PC_LIBS)
+LINKFLAGS = $(_DESKTOP_LIBS)
 
 OBJDIR = obj
 
-CFLAGS = -I./source $(_CFLAGS) $(_PC_CFLAGS)
-CXXFLAGS = -I./source $(_CXXFLAGS) $(_PC_CXXFLAGS)
+CFLAGS = -I./source $(_CFLAGS) $(_DESKTOP_CFLAGS)
+CXXFLAGS = -I./source $(_CXXFLAGS) $(_DESKTOP_CXXFLAGS)
 
 HEADERS = $(_HEADERS)
-SOURCES = $(_SOURCES)
+SOURCES = $(_DESKTOP_SOURCES) $(_SOURCES)
 OBJ = $(SOURCES:%=$(OBJDIR)/%.o)
-BIN = $NAME
+BIN = app
 
 all: $(BIN)
 
