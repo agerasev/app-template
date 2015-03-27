@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-include $(LOCAL_PATH)/../../build-info.mk
+include $(LOCAL_PATH)/build-info.mk
 
 LOCAL_MODULE    := native-activity
 
